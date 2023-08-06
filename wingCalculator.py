@@ -8,17 +8,19 @@ import xml.dom.minidom as minidom
 foilName = "foil_1234" 
 wingSpan_m = 3 
 chordLenght_m =0.4
-n = 50    #number of sections  
+n = 32    #number of sections  
+m = 2     #control parameter for section distribution
 
 ########## Definition of Eliptical Wing ##########
 a = wingSpan_m / 2 
 b = chordLenght_m 
 t = np.linspace(0,1,n)
-X = a*(1-np.exp(-t))
+X = a*(1-np.exp(-t*m))
 X = X * (a / X[-1])
 Y = np.sqrt(np.abs((1-(np.square(X)/a**2))*b**2))
-Y[-1] = Y[-2] / 10
+Y[-1] = Y[-2] / 3
 Offset = (Y[0] - Y) / 2
+print(X)
 ##################################################
 root = ET.Element("explane", version="1.0")
 units = ET.SubElement(root, "Units")
